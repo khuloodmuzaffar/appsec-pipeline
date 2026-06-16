@@ -11,13 +11,13 @@ Target App (OWASP Juice Shop)
 ┌─────────────────────────────────┐
 │       GitHub Actions CI/CD      │
 │  ┌──────────┐ ┌───────────────┐ │
-│  │   SAST   │ │      SCA      │ │
-│  │  Semgrep │ │     Trivy     │ │
+│  │  SAST    │ │    SCA        │ │
+│  │ Semgrep  │ │   Trivy       │ │
 │  │          │ │               │ │
 │  └──────────┘ └───────────────┘ │
 │  ┌──────────────────────────┐   │
-│  │   DAST — OWASP ZAP       │   │
-│  │   Baseline + Full Scan   │   │
+│  │  DAST — OWASP ZAP        │   │
+│  │  Baseline + Full Scan    │   │
 │  └──────────────────────────┘   │
 └─────────────────────────────────┘
           │
