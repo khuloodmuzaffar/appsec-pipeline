@@ -1,6 +1,6 @@
 # AppSec Pipeline — Automated SAST/DAST/SCA with Vulnerability Triage
 
-A production-grade DevSecOps pipeline that integrates multiple security scanners, normalizes findings into a unified schema, and applies configurable false-positive suppression — reducing actionable finding noise by ~--%.
+A DevSecOps pipeline designed around production security engineering principles — multi-scanner integration, unified finding normalization, and configurable false-positive suppression.
 
 ## Architecture
 
@@ -11,13 +11,13 @@ Target App (OWASP Juice Shop)
 ┌─────────────────────────────────┐
 │       GitHub Actions CI/CD      │
 │  ┌──────────┐ ┌───────────────┐ │
-│  │  SAST    │ │      SCA      │ │
-│  │ Semgrep  │ │    Trivy      │ │
-│  │ CodeQL   │ │               │ │
+│  │   SAST   │ │      SCA      │ │
+│  │  Semgrep │ │     Trivy     │ │
+│  │          │ │               │ │
 │  └──────────┘ └───────────────┘ │
 │  ┌──────────────────────────┐   │
-│  │  DAST — OWASP ZAP        │   │
-│  │  Baseline + Full Scan    │   │
+│  │   DAST — OWASP ZAP       │   │
+│  │   Baseline + Full Scan   │   │
 │  └──────────────────────────┘   │
 └─────────────────────────────────┘
           │
@@ -55,15 +55,17 @@ Target App (OWASP Juice Shop)
 
 ```
 appsec-pipeline/
+├── app/
+|   └── juice-shop/
 ├── .github/
 │   └── workflows/
-│       ├── sast.yml          # Semgrep static analysis
-│       ├── sca.yml           # Trivy dependency scan
-│       └── dast.yml          # OWASP ZAP dynamic scan
+│       ├── semgrep.yml           # Semgrep static analysis
+│       ├── trivy.yml             # Trivy dependency scan
+│       └── zap.yml               # OWASP ZAP dynamic scan
 ├── scanner/
-│   ├── aggregator.py         # Core triage engine
+│   ├── aggregator.py             # Core triage engine
 │   └── false_positive_rules.yml  # Suppression rules (auditable)
-├── reports/                  # Generated scan outputs (gitignored)
+├── reports/                      # Generated scan outputs (gitignored)
 └── docs/
     └── architecture.md
 ```
@@ -85,5 +87,5 @@ pip install pyyaml
 python scanner/aggregator.py
 ```
 
-```
+
 
