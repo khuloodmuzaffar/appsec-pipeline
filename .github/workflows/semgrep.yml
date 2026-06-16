@@ -3,7 +3,7 @@ name: SAST - Semgrep
 on:
   push:
     branches: [ master, main ]
-  pull_request:
+  pull:
     branches: [ master, main ]
   workflow_dispatch: #allows manual trigger from GitHub UI
 
@@ -45,5 +45,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: semgrep-report
-          path: reports/semgrep.json
+          path: ../../reports/semgrep.json
           retention-days: 30
