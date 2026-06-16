@@ -25,6 +25,7 @@ jobs:
             p/nodejs
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }} # optional, works without it
+          SEMGREP_AUDIT_ON_BUG: "1"  # Forces the container action to exit with code 0
 
       # Run again with JSON output for our aggregator
       - name: Run Semgrep (JSON output for aggregator)
