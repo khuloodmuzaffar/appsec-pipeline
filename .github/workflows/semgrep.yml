@@ -3,7 +3,7 @@ name: SAST - Semgrep
 on:
   push:
     branches: [ master, main ]
-  pull:
+  pull_request:
     branches: [ master, main ]
   workflow_dispatch: #allows manual trigger from GitHub UI
 
@@ -23,7 +23,6 @@ jobs:
             p/owasp-top-ten
             p/secrets
             p/nodejs
-          generateSarif: false 
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }} # optional, works without it
 
@@ -31,12 +30,13 @@ jobs:
       - name: Run Semgrep (JSON output for aggregator)
         run: |
           pip install semgrep
+          mkdir -p reports
           semgrep \
             --config p/owasp-top-ten \
             --config p/secrets \
             --config p/nodejs \
             --json \
-            --ouput reports/semgrep.json \
+            --output reports/semgrep.json \
             --severity WARNING \
             --severity ERROR \
             . || true  # don't fail the pipeline on findings — we triage ourselves
@@ -45,5 +45,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: semgrep-report
-          path: ../../reports/semgrep.json
+          path: reports/semgrep.json
           retention-days: 30
