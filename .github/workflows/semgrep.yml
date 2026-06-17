@@ -30,7 +30,7 @@ jobs:
       # Run again with JSON output for our aggregator
       - name: Run Semgrep (JSON output for aggregator)
         run: |
-          python3 -m pip install --upgrade semgrep
+          pip install --upgrade semgrep
           mkdir -p reports
           semgrep \
             --config p/owasp-top-ten \
