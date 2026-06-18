@@ -19,6 +19,7 @@ jobs:
       # Scan filesystem for vulnerable dependencies (package.json, requirements.txt, etc.)
       - name: Run Trivy (filesystem scan)
         uses: aquasecurity/trivy-action@master
+        run: mkdir -p reports
         with:
           scan-type: fs
           scan-ref: .
