@@ -1,0 +1,46 @@
+name: SCA - Trivy
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  trivy:
+    name: Trivy SCA Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Scan filesystem for vulnerable dependencies (package.json, requirements.txt, etc.)
+      - name: Run Trivy (filesystem scan)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: json
+          output: reports/trivy.json
+          severity: CRITICAL, HIGH, MEDIUM    # ignore LOW for now — reduces noise
+          exit-code: 0                        # don't fail pipeline — we handle triage ourselves
+
+      - name: Run Trivy (misconfiguration scan)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: .
+          format: json
+          output: reports/trivy-misconfig.json
+          exit-code: 0
+
+      - name: Upload Trivy reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-reports
+          path: |
+            reports/trivy.json
+            reports/trivy-misconfig.json
+          retention-days: 30
