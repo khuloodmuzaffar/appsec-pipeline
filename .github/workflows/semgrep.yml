@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Semgrep (OWASP Top 10 + Secrets)
-        uses: returntocorp/semgrep-action@v1
+        uses: semgrep/semgrep-action@v1
         with:
           config: |
             p/owasp-top-ten
@@ -30,7 +30,7 @@ jobs:
       # Run again with JSON output for our aggregator
       - name: Run Semgrep (JSON output for aggregator)
         run: |
-          pip install --upgrade semgrep
+          pip install semgrep
           mkdir -p reports
           semgrep \
             --config p/owasp-top-ten \
