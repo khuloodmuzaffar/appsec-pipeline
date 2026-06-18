@@ -40,8 +40,8 @@ jobs:
             --output reports/semgrep.json \
             --severity WARNING \
             --severity ERROR \
-            . \
-            || true  # don't fail the pipeline on findings — we triage ourselves
+            --no-error
+      # . || true  # don't fail the pipeline on findings — we triage ourselves
 
       - name: Upload Semgrep report
         uses: actions/upload-artifact@v4
