@@ -24,8 +24,8 @@ jobs:
           scan-ref: .
           format: json
           output: reports/trivy.json
-          severity: [ "CRITICAL", "HIGH", "MEDIUM" ]    # ignore LOW for now — reduces noise
-          exit-code: 0                        # don't fail pipeline — we handle triage ourselves
+          severity: CRITICAL,HIGH,MEDIUM   # ignore LOW for now — reduces noise
+          exit-code: 0                        
 
       - name: Run Trivy (misconfiguration scan)
         uses: aquasecurity/trivy-action@master
