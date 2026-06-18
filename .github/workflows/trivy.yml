@@ -16,10 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create reports directory
+        run: mkdir -p reports
+
       # Scan filesystem for vulnerable dependencies (package.json, requirements.txt, etc.)
       - name: Run Trivy (filesystem scan)
-        uses: aquasecurity/trivy-action@master
-        run: mkdir -p reports
+        uses: aquasecurity/trivy-action@0.69.3
         with:
           scan-type: fs
           scan-ref: .
@@ -30,7 +32,7 @@ jobs:
 
       # Also scan for misconfigurations (Dockerfiles, CI configs, IaC)
       - name: Run Trivy (misconfiguration scan)
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.69.3
         with:
           scan-type: config
           scan-ref: .
