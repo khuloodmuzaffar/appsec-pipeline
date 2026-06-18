@@ -11,37 +11,28 @@ jobs:
   semgrep:
     name: Semgrep SAST Scan
     runs-on: ubuntu-latest
+
+    container:
+      image: semgrep/semgrep:latest
   
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run Semgrep (OWASP Top 10 + Secrets)
-        uses: semgrep/semgrep-action@v1
-        with:
-          config: |
-            p/owasp-top-ten
-            p/secrets
-            p/nodejs
-        env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }} # optional, works without it
-        continue-on-error: true
-
-      # Run again with JSON output for our aggregator
-      - name: Run Semgrep (JSON output for aggregator)
+      - name: Run Semgrep and Generate JSON Report
         run: |
-          pip install semgrep
           mkdir -p reports
-          semgrep \
+          semgrep scan \
             --config p/owasp-top-ten \
             --config p/secrets \
             --config p/nodejs \
-            --json \
-            --output reports/semgrep.json \
             --severity WARNING \
             --severity ERROR \
-        continue-on-error: true
-      # . || true  # don't fail the pipeline on findings — we triage ourselves
+            --json \
+            --output reports/semgrep.json
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }} # optional, works without it
+        continue-on-error: true # Ensures pipeline passes even if findings exist, allowing manual triage
 
       - name: Upload Semgrep report
         uses: actions/upload-artifact@v4
