@@ -25,7 +25,7 @@ jobs:
             p/nodejs
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }} # optional, works without it
-          SEMGREP_AUDIT_ON_BUG: "1"  # Forces the container action to exit with code 0 
+          # SEMGREP_AUDIT_ON_BUG: "1"  # Forces the container action to exit with code 0 
 
       # Run again with JSON output for our aggregator
       - name: Run Semgrep (JSON output for aggregator)
@@ -40,7 +40,8 @@ jobs:
             --output reports/semgrep.json \
             --severity WARNING \
             --severity ERROR \
-            . || true  # don't fail the pipeline on findings — we triage ourselves
+            . \
+            || true  # don't fail the pipeline on findings — we triage ourselves
 
       - name: Upload Semgrep report
         uses: actions/upload-artifact@v4
