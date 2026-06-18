@@ -28,6 +28,7 @@ jobs:
           severity: CRITICAL,HIGH,MEDIUM   # ignore LOW for now — reduces noise
           exit-code: 0                        
 
+      # Also scan for misconfigurations (Dockerfiles, CI configs, IaC)
       - name: Run Trivy (misconfiguration scan)
         uses: aquasecurity/trivy-action@master
         with:
