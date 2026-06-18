@@ -27,7 +27,7 @@ jobs:
           scan-ref: .
           format: json
           output: reports/trivy.json
-          severity: CRITICAL,HIGH,MEDIUM   # ignore LOW for now — reduces noise
+          # severity: CRITICAL,HIGH,MEDIUM   # ignore LOW for now — reduces noise
           exit-code: 0                        
 
       # Also scan for misconfigurations (Dockerfiles, CI configs, IaC)
