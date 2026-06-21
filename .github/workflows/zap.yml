@@ -39,7 +39,7 @@ jobs:
         with:
           target: http://localhost:3000
           # rules_file_name: .zap/rules.tsv     # our custom false-positive rules (Week 3)
-          cmd_options: '-J reports/zap-baseline-report.json'
+          cmd_options: '-J reports/baseline-report.json'
           fail_action: false
         continue-on-error: true
 
