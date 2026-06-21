@@ -39,6 +39,7 @@ jobs:
         with:
           target: http://localhost:3000
           # rules_file_name: .zap/rules.tsv     # our custom false-positive rules (Week 3)
+          cmd_options: '-J reports/zap-baseline-report.json'
           fail_action: false
         continue-on-error: true
 
@@ -49,6 +50,7 @@ jobs:
         uses: zaproxy/action-full-scan@v0.10.0
         with:
           target: http://localhost:3000
+          cmd_options: '-J reports/zap-full-report.json'
           fail_action: false
         continue-on-error: true
 
@@ -56,5 +58,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: zap-reports
-          path : zap-out.json
+          path : reports/
           retention-days: 30
