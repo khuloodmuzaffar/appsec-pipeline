@@ -29,6 +29,9 @@ jobs:
       - name: Create reports directory
         run: mkdir -p reports
 
+      - name: Fix permissions for ZAP
+        run: chmod -R 777 $GITHUB_WORKSPACE
+
       # ZAP Baseline scan — fast, passive scan only (~2 min)
       # Good for PRs and daily runs
       - name: Run ZAP Baseline Scan
